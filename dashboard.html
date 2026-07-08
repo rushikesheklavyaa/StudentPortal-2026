@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard | Eklavyaa Academy</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0A2463">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Eklavyaa Academy">
+<link rel="icon" href="assets/img/favicon.ico">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+<link rel="stylesheet" href="assets/css/style.css?v=2">
+<link rel="stylesheet" href="assets/css/components.css?v=2">
+<link rel="stylesheet" href="assets/css/dashboard.css?v=2">
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="logo-badge">EA</div>
+      <div class="brand-text">
+        <div class="name">Eklavyaa Academy</div>
+        <div class="tag">Attendance Portal</div>
+      </div>
+    </div>
+
+    <div class="nav-section-label">Main</div>
+    <nav class="nav-list">
+      <a href="#" class="nav-item active" data-view="view-dashboard"><i class="fa-solid fa-grid-2"></i> Dashboard</a>
+      <a href="#" class="nav-item" data-view="view-students"><i class="fa-solid fa-users"></i> Students</a>
+      <a href="#" class="nav-item" data-view="view-attendance"><i class="fa-solid fa-clipboard-check"></i> Attendance</a>
+    </nav>
+
+    <div class="nav-section-label">Performance</div>
+    <nav class="nav-list">
+      <a href="#" class="nav-item" data-view="view-tests"><i class="fa-solid fa-file-pen"></i> Tests</a>
+      <a href="#" class="nav-item" data-view="view-marks"><i class="fa-solid fa-square-poll-vertical"></i> Marks Entry</a>
+      <a href="#" class="nav-item" data-view="view-reports"><i class="fa-solid fa-chart-column"></i> Reports</a>
+    </nav>
+
+    <div class="nav-section-label">Engagement</div>
+    <nav class="nav-list">
+      <a href="#" class="nav-item" data-view="view-notices"><i class="fa-solid fa-bullhorn"></i> Notices &amp; Appreciation</a>
+    </nav>
+
+    <div class="nav-section-label admin-only" id="adminNavLabel">Admin</div>
+    <nav class="nav-list admin-only" id="adminNavList">
+      <a href="#" class="nav-item" data-view="view-fees"><i class="fa-solid fa-indian-rupee-sign"></i> Fees</a>
+      <a href="#" class="nav-item" data-view="view-settings"><i class="fa-solid fa-gear"></i> Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="logout-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <div class="main-content">
+
+    <header class="topbar">
+      <div style="display:flex; align-items:center; gap:14px;">
+        <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        <div class="topbar-title">
+          <h1 id="pageTitle">Dashboard</h1>
+          <p id="pageSubtitle">Welcome back! Here's what's happening today.</p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="teacher-chip">
+          <div class="avatar-chip" id="teacherAvatar">T</div>
+          <div>
+            <div class="t-name" id="teacherNameChip">Teacher</div>
+            <div class="t-role" id="teacherRoleChip">Instructor</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-content">
+
+      <!-- ================= DASHBOARD VIEW ================= -->
+      <section class="view-section active" id="view-dashboard">
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon icon-blue"><i class="fa-solid fa-users"></i></div>
+            <div class="stat-info">
+              <div class="stat-value" id="statTotalStudents">0</div>
+              <div class="stat-label">Total Students</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-green"><i class="fa-solid fa-user-check"></i></div>
+            <div class="stat-info">
+              <div class="stat-value" id="statPresentToday">0</div>
+              <div class="stat-label">Present Today</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-red"><i class="fa-solid fa-user-xmark"></i></div>
+            <div class="stat-info">
+              <div class="stat-value" id="statAbsentToday">0</div>
+              <div class="stat-label">Absent Today</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-amber"><i class="fa-solid fa-file-pen"></i></div>
+            <div class="stat-info">
+              <div class="stat-value" id="statTotalTests">0</div>
+              <div class="stat-label">Total Tests</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-pad" style="margin-bottom:20px;">
+          <div class="card-header"><h3>Quick Actions</h3></div>
+          <div class="quick-actions-grid">
+            <button class="quick-action-btn" data-view="view-students" data-quick="add-student">
+              <i class="fa-solid fa-user-plus"></i>
+              <span>Add Student</span>
+            </button>
+            <button class="quick-action-btn" data-view="view-attendance">
+              <i class="fa-solid fa-clipboard-check"></i>
+              <span>Mark Attendance</span>
+            </button>
+            <button class="quick-action-btn" data-view="view-tests">
+              <i class="fa-solid fa-file-circle-plus"></i>
+              <span>Create Test</span>
+            </button>
+            <button class="quick-action-btn" data-view="view-marks">
+              <i class="fa-solid fa-pen-to-square"></i>
+              <span>Enter Marks</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="card card-pad chart-card">
+            <div class="card-header">
+              <div>
+                <h3>Attendance Trend</h3>
+                <p class="subtitle">Last 7 days present vs absent</p>
+              </div>
+            </div>
+            <canvas id="attendanceTrendChart"></canvas>
+          </div>
+
+          <div class="card card-pad">
+            <div class="card-header"><h3>Recent Activity</h3></div>
+            <div class="activity-list" id="activityList">
+              <div class="empty-state"><i class="fa-solid fa-clock"></i><p>No recent activity yet.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= STUDENTS VIEW ================= -->
+      <section class="view-section" id="view-students">
+        <div class="card card-pad">
+          <div class="card-header">
+            <div>
+              <h3>Student Management</h3>
+              <p class="subtitle">Add, edit, search and manage all enrolled students</p>
+            </div>
+            <button class="btn btn-solid-primary" id="openAddStudentBtn"><i class="fa-solid fa-user-plus"></i> Add Student</button>
+          </div>
+
+          <div class="filter-bar">
+            <div class="search-box">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="studentSearchInput" placeholder="Search by name, ID or roll no...">
+            </div>
+            <div class="field">
+              <label>Standard</label>
+              <select id="filterStandard"></select>
+            </div>
+            <div class="field">
+              <label>Board</label>
+              <select id="filterBoard"></select>
+            </div>
+            <div class="field">
+              <label>Batch</label>
+              <select id="filterBatch"></select>
+            </div>
+            <button class="btn btn-outline" id="resetStudentFilters"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Student ID</th>
+                  <th>Standard</th>
+                  <th>Board</th>
+                  <th>Batch</th>
+                  <th>Roll No</th>
+                  <th>Parent</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentsTableBody">
+                <!-- populated by students.js -->
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination" id="studentsPagination"></div>
+        </div>
+      </section>
+
+      <!-- ================= ATTENDANCE VIEW ================= -->
+      <section class="view-section" id="view-attendance">
+        <div class="card card-pad">
+          <div class="card-header">
+            <div>
+              <h3>Mark Attendance</h3>
+              <p class="subtitle">Select a class, load students, and mark today's attendance</p>
+            </div>
+          </div>
+
+          <div class="filter-bar">
+            <div class="field">
+              <label>Date</label>
+              <input type="date" id="attendanceDate">
+            </div>
+            <div class="field">
+              <label>Standard</label>
+              <select id="attStandard"></select>
+            </div>
+            <div class="field">
+              <label>Board</label>
+              <select id="attBoard"></select>
+            </div>
+            <div class="field">
+              <label>Batch</label>
+              <select id="attBatch"></select>
+            </div>
+            <button class="btn btn-solid-primary" id="loadAttendanceStudentsBtn"><i class="fa-solid fa-download"></i> Load Students</button>
+          </div>
+
+          <div id="attendanceContentArea">
+            <div class="empty-state"><i class="fa-solid fa-clipboard-list"></i><p>Select class details above and click "Load Students" to begin.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TESTS VIEW ================= -->
+      <section class="view-section" id="view-tests">
+        <div class="card card-pad">
+          <div class="card-header">
+            <div>
+              <h3>Create Test</h3>
+              <p class="subtitle">Schedule a new test for a class and batch</p>
+            </div>
+          </div>
+
+          <form id="createTestForm">
+            <div class="field-grid">
+              <div class="field">
+                <label>Test Name <span class="req">*</span></label>
+                <input type="text" id="testName" placeholder="e.g. Unit Test 1" required>
+              </div>
+              <div class="field">
+                <label>Subject <span class="req">*</span></label>
+                <input type="text" id="testSubject" placeholder="e.g. Mathematics" required>
+              </div>
+              <div class="field">
+                <label>Standard <span class="req">*</span></label>
+                <select id="testStandard" required></select>
+              </div>
+              <div class="field">
+                <label>Board <span class="req">*</span></label>
+                <select id="testBoard" required></select>
+              </div>
+              <div class="field">
+                <label>Batch <span class="req">*</span></label>
+                <select id="testBatch" required></select>
+              </div>
+              <div class="field">
+                <label>Date <span class="req">*</span></label>
+                <input type="date" id="testDate" required>
+              </div>
+              <div class="field">
+                <label>Maximum Marks <span class="req">*</span></label>
+                <input type="number" id="testMaxMarks" min="1" placeholder="e.g. 100" required>
+              </div>
+              <div class="field">
+                <label>Test Paper PDF (optional, max 10 MB)</label>
+                <input type="file" id="testPaperInput" accept="application/pdf">
+              </div>
+              <div class="field">
+                <label>Model Answer PDF (optional, max 10 MB)</label>
+                <input type="file" id="modelAnswerInput" accept="application/pdf">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-solid-primary"><i class="fa-solid fa-floppy-disk"></i> Save Test</button>
+          </form>
+        </div>
+
+        <div class="card card-pad" style="margin-top:20px;">
+          <div class="card-header"><h3>All Tests</h3></div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Test Name</th>
+                  <th>Subject</th>
+                  <th>Standard</th>
+                  <th>Board</th>
+                  <th>Batch</th>
+                  <th>Date</th>
+                  <th>Max Marks</th>
+                  <th>Files</th>
+                </tr>
+              </thead>
+              <tbody id="testsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= MARKS VIEW ================= -->
+      <section class="view-section" id="view-marks">
+        <div class="card card-pad">
+          <div class="card-header">
+            <div>
+              <h3>Enter Marks</h3>
+              <p class="subtitle">Select a test, load students, and enter their scores</p>
+            </div>
+          </div>
+
+          <div class="filter-bar">
+            <div class="field" style="min-width:280px;">
+              <label>Select Test</label>
+              <select id="marksTestSelect"></select>
+            </div>
+            <button class="btn btn-solid-primary" id="loadMarksStudentsBtn"><i class="fa-solid fa-download"></i> Load Students</button>
+          </div>
+
+          <div id="marksContentArea">
+            <div class="empty-state"><i class="fa-solid fa-square-poll-vertical"></i><p>Select a test above and click "Load Students" to begin.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= REPORTS VIEW ================= -->
+      <section class="view-section" id="view-reports">
+        <div class="card card-pad">
+          <div class="card-header">
+            <div>
+              <h3>Reports</h3>
+              <p class="subtitle">Daily, monthly, student-wise and test reports</p>
+            </div>
+          </div>
+
+          <div class="filter-bar">
+            <div class="field">
+              <label>Report Type</label>
+              <select id="reportType">
+                <option value="daily">Daily Attendance</option>
+                <option value="monthly">Monthly Attendance</option>
+                <option value="student">Student Attendance</option>
+                <option value="test">Test Reports</option>
+              </select>
+            </div>
+            <div class="field" id="reportDateField">
+              <label>Date</label>
+              <input type="date" id="reportDate">
+            </div>
+            <div class="field" id="reportMonthField" style="display:none;">
+              <label>Month</label>
+              <input type="month" id="reportMonth">
+            </div>
+            <div class="field" id="reportStudentField" style="display:none;">
+              <label>Student ID</label>
+              <input type="text" id="reportStudentId" placeholder="e.g. STD000001">
+            </div>
+            <button class="btn btn-solid-primary" id="generateReportBtn"><i class="fa-solid fa-magnifying-glass-chart"></i> Generate</button>
+          </div>
+
+          <div id="reportResultArea">
+            <div class="empty-state"><i class="fa-solid fa-chart-column"></i><p>Choose a report type and generate to view results.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= NOTICES / APPRECIATION VIEW ================= -->
+      <section class="view-section" id="view-notices">
+        <div class="card card-pad">
+          <div class="card-header">
+            <div>
+              <h3>Post a Notice or Appreciation</h3>
+              <p class="subtitle">Notices and appreciation posts appear on the student's own portal</p>
+            </div>
+          </div>
+
+          <form id="noticeForm">
+            <div class="field-grid">
+              <div class="field">
+                <label>Type <span class="req">*</span></label>
+                <select id="noticeType" required>
+                  <option value="Appreciation">Appreciation</option>
+                  <option value="Notice">Notice</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Send To <span class="req">*</span></label>
+                <select id="noticeTargetType" required>
+                  <option value="Student">Specific Student</option>
+                  <option value="Standard">Whole Standard</option>
+                  <option value="Batch">Whole Batch</option>
+                  <option value="All" class="admin-only-option">Everyone</option>
+                </select>
+              </div>
+              <div class="field" id="noticeTargetStudentField">
+                <label>Student ID</label>
+                <input type="text" id="noticeTargetStudentId" placeholder="e.g. STD000001">
+              </div>
+              <div class="field" id="noticeTargetStandardField" style="display:none;">
+                <label>Standard</label>
+                <select id="noticeTargetStandard"></select>
+              </div>
+              <div class="field" id="noticeTargetBatchField" style="display:none;">
+                <label>Batch</label>
+                <select id="noticeTargetBatch"></select>
+              </div>
+            </div>
+            <div class="field">
+              <label>Title <span class="req">*</span></label>
+              <input type="text" id="noticeTitle" placeholder="e.g. Great improvement in Science!" required>
+            </div>
+            <div class="field">
+              <label>Message <span class="req">*</span></label>
+              <textarea id="noticeMessage" rows="3" placeholder="Write the message the student will see..." required></textarea>
+            </div>
+            <div class="field">
+              <label>Attach Image (optional, JPG/PNG/WEBP, max 4 MB)</label>
+              <input type="file" id="noticeImageInput" accept="image/jpeg,image/png,image/webp">
+            </div>
+            <button type="submit" class="btn btn-solid-primary"><i class="fa-solid fa-paper-plane"></i> Post</button>
+          </form>
+        </div>
+
+        <div class="card card-pad" style="margin-top:20px;">
+          <div class="card-header"><h3>All Posts</h3></div>
+          <div class="activity-list" id="noticesListArea">
+            <div class="empty-state"><i class="fa-solid fa-bullhorn"></i><p>No notices or appreciation posts yet.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= FEES VIEW (Admin only) ================= -->
+      <section class="view-section admin-only" id="view-fees">
+        <div class="card card-pad">
+          <div class="card-header">
+            <div>
+              <h3>Fees Overview</h3>
+              <p class="subtitle">Track total fees, amounts paid and pending balances per student</p>
+            </div>
+          </div>
+
+          <div class="filter-bar">
+            <div class="search-box">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="feesSearchInput" placeholder="Search by name or Student ID...">
+            </div>
+            <div class="field">
+              <label>Status</label>
+              <select id="feesStatusFilter">
+                <option value="">All</option>
+                <option value="Paid">Paid</option>
+                <option value="Partial">Partial</option>
+                <option value="Pending">Pending</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Student ID</th>
+                  <th>Total Fee</th>
+                  <th>Paid</th>
+                  <th>Balance</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="feesTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SETTINGS VIEW (Admin only) ================= -->
+      <section class="view-section admin-only" id="view-settings">
+        <div class="card card-pad">
+          <div class="card-header">
+            <div>
+              <h3>Academy Logo</h3>
+              <p class="subtitle">This logo appears on the login page, the teacher dashboard and the student portal</p>
+            </div>
+          </div>
+
+          <div class="logo-settings-row">
+            <div class="logo-preview-box" id="currentLogoPreview">
+              <i class="fa-solid fa-image"></i>
+            </div>
+            <div style="flex:1;">
+              <form id="logoUploadForm">
+                <div class="field">
+                  <label>Upload New Logo (JPG, PNG or WEBP, max 4 MB)</label>
+                  <input type="file" id="logoFileInput" accept="image/jpeg,image/png,image/webp" required>
+                </div>
+                <button type="submit" class="btn btn-solid-primary" id="uploadLogoBtn"><i class="fa-solid fa-upload"></i> Upload Logo</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= ADD INSTALLMENT MODAL (Admin only) ================= -->
+      <div class="modal-overlay" id="installmentModal">
+        <div class="modal-box" style="max-width:420px;">
+          <div class="modal-header">
+            <h3>Record a Payment</h3>
+            <button class="modal-close" id="closeInstallmentModal"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <form id="installmentForm">
+            <div class="modal-body">
+              <input type="hidden" id="installmentStudentId">
+              <div class="field">
+                <label>Amount Received (₹) <span class="req">*</span></label>
+                <input type="number" id="installmentAmount" min="1" required>
+              </div>
+              <div class="field">
+                <label>Date</label>
+                <input type="date" id="installmentDate">
+              </div>
+              <div class="field">
+                <label>Note</label>
+                <input type="text" id="installmentNote" placeholder="e.g. 2nd installment - cash">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-ghost" id="cancelInstallmentModal">Cancel</button>
+              <button type="submit" class="btn btn-solid-primary"><i class="fa-solid fa-floppy-disk"></i> Save Payment</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Add / Edit Student Modal -->
+<div class="modal-overlay" id="studentModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="studentModalTitle">Add Student</h3>
+      <button class="modal-close" id="closeStudentModal"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <form id="studentForm">
+      <div class="modal-body">
+        <input type="hidden" id="editStudentId">
+        <div class="field-grid">
+          <div class="field">
+            <label>Student Name <span class="req">*</span></label>
+            <input type="text" id="studentName" required>
+          </div>
+          <div class="field">
+            <label>Roll No <span class="req">*</span></label>
+            <input type="text" id="studentRollNo" required>
+          </div>
+          <div class="field">
+            <label>Standard <span class="req">*</span></label>
+            <select id="studentStandard" required></select>
+          </div>
+          <div class="field">
+            <label>Board <span class="req">*</span></label>
+            <select id="studentBoard" required></select>
+          </div>
+          <div class="field">
+            <label>Batch <span class="req">*</span></label>
+            <select id="studentBatch" required></select>
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <select id="studentStatus">
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Parent Name</label>
+            <input type="text" id="parentName">
+          </div>
+          <div class="field">
+            <label>Parent Mobile</label>
+            <input type="tel" id="parentMobile">
+          </div>
+          <div class="field">
+            <label>Parent Email</label>
+            <input type="email" id="parentEmail">
+          </div>
+        </div>
+
+        <div class="admin-only" id="studentFeesFieldset">
+          <div class="modal-section-divider"><span>Fees</span></div>
+          <div class="field-grid">
+            <div class="field">
+              <label>Total Fee (₹)</label>
+              <input type="number" id="studentTotalFee" min="0" placeholder="e.g. 24000">
+            </div>
+            <div class="field">
+              <label>Amount Paid (₹)</label>
+              <input type="number" id="studentAmountPaid" min="0" placeholder="e.g. 12000">
+            </div>
+            <div class="field">
+              <label>Payment Mode</label>
+              <select id="studentPaymentMode">
+                <option value="Full">Full Payment</option>
+                <option value="Installment">Installments</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" id="cancelStudentModal">Cancel</button>
+        <button type="submit" class="btn btn-solid-primary" id="saveStudentBtn"><i class="fa-solid fa-floppy-disk"></i> Save Student</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+
+<!-- App Scripts -->
+<script type="module" src="assets/js/dashboard.js?v=2"></script>
+<script src="assets/js/pwa-init.js?v=1"></script>
+
+</body>
+</html>

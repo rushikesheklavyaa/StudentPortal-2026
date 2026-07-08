@@ -1,0 +1,298 @@
+/* ==================================================================
+   student.css
+   Styling for the public Student Portal (no login required)
+   ================================================================== */
+
+.student-page {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.student-topbar {
+  background: linear-gradient(120deg, #0f2557, var(--primary) 60%, var(--secondary));
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+}
+
+.student-topbar .brand { display: flex; align-items: center; gap: 12px; }
+
+.student-topbar .logo-badge {
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--accent), #fbbf24);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: var(--primary); font-size: 16px;
+  overflow: hidden;
+}
+
+.student-topbar .logo-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.student-topbar .brand .name { font-weight: 700; font-size: 15px; }
+.student-topbar .brand .tag { font-size: 10.5px; color: rgba(255,255,255,0.65); letter-spacing: 0.05em; }
+
+.teacher-login-link {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  padding: 9px 16px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+.teacher-login-link:hover { background: rgba(255,255,255,0.24); }
+
+.student-search-hero {
+  max-width: 520px;
+  margin: 60px auto 0;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.student-search-hero h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+.student-search-hero p { color: var(--text-muted); font-size: 13.5px; margin-bottom: 26px; }
+
+.student-search-box {
+  display: flex;
+  gap: 10px;
+  background: #fff;
+  padding: 8px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+}
+
+.student-search-box input {
+  flex: 1;
+  border: none;
+  padding: 12px 16px;
+  font-size: 14px;
+  background: transparent;
+}
+
+.student-search-box input:focus { outline: none; }
+
+.student-search-box button {
+  padding: 12px 22px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  color: #fff;
+  font-weight: 600;
+  font-size: 13.5px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.student-hint {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ---------------- Student profile view ---------------- */
+
+.student-dashboard-wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+  display: none;
+}
+
+.student-dashboard-wrap.active { display: block; animation: fadeSlideUp 0.5s ease both; }
+
+.profile-header-card {
+  background: linear-gradient(120deg, var(--primary), var(--secondary));
+  border-radius: var(--radius-lg);
+  padding: 30px 32px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.profile-header-left { display: flex; align-items: center; gap: 18px; }
+
+.profile-avatar {
+  width: 68px; height: 68px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.18);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.profile-header-left h2 { font-size: 20px; font-weight: 700; }
+.profile-header-left .meta { font-size: 12.5px; color: rgba(255,255,255,0.8); margin-top: 4px; display: flex; gap: 10px; flex-wrap: wrap; }
+.profile-header-left .meta span { display: flex; align-items: center; gap: 5px; }
+
+.profile-back-btn {
+  background: rgba(255, 255, 255, 0.16);
+  padding: 9px 16px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #fff;
+  display: flex; align-items: center; gap: 6px;
+  transition: var(--transition);
+}
+.profile-back-btn:hover { background: rgba(255,255,255,0.28); }
+
+.student-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.attendance-ring-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.progress-ring-label {
+  position: absolute;
+  text-align: center;
+}
+
+.progress-ring-label .pct { font-size: 22px; font-weight: 700; color: var(--text-dark); }
+.progress-ring-label .lbl { font-size: 10.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+
+.student-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.marks-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.marks-list-item:last-child { border-bottom: none; }
+
+.marks-list-item .m-name { font-size: 13.5px; font-weight: 600; color: var(--text-dark); }
+.marks-list-item .m-sub { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+.marks-score {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 10px;
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--primary);
+}
+
+@media (max-width: 900px) {
+  .student-content-grid { grid-template-columns: 1fr; }
+  .student-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .student-stats-grid { grid-template-columns: 1fr; }
+  .profile-header-card { flex-direction: column; align-items: flex-start; }
+  .student-topbar { padding: 14px 18px; }
+}
+
+/* ---------------- Student portal tabs ---------------- */
+
+.student-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+  padding-bottom: 2px;
+}
+
+.student-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  transition: var(--transition);
+}
+
+.student-tab-btn:hover { color: var(--text-dark); background: #F1F5F9; }
+
+.student-tab-btn.active {
+  color: var(--primary);
+  background: #fff;
+  box-shadow: 0 -2px 0 var(--primary) inset;
+}
+
+.tab-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--danger);
+  display: inline-block;
+}
+
+.student-tab-panel { display: none; animation: fadeSlideUp 0.35s ease both; }
+.student-tab-panel.active { display: block; }
+
+.fee-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.fee-summary-chip {
+  background: #F8FAFC;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+}
+
+.fee-summary-chip .amt { font-size: 19px; font-weight: 700; color: var(--text-dark); }
+.fee-summary-chip .lbl { font-size: 11px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+.notice-card {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+
+.notice-card.appreciation { background: linear-gradient(135deg, rgba(245,158,11,0.07), rgba(245,158,11,0.02)); border-color: rgba(245,158,11,0.3); }
+.notice-card .n-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 14px; flex-shrink: 0;
+}
+.notice-card.appreciation .n-icon { background: linear-gradient(135deg, var(--accent), #d97706); }
+.notice-card.notice .n-icon { background: linear-gradient(135deg, var(--secondary), var(--primary)); }
+.notice-card .n-title { font-size: 13.5px; font-weight: 700; color: var(--text-dark); }
+.notice-card .n-message { font-size: 12.5px; color: var(--text-dark); margin-top: 4px; line-height: 1.5; }
+.notice-card .n-meta { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+
+@media (max-width: 700px) {
+  .fee-summary-grid { grid-template-columns: 1fr; }
+  .student-tabs { overflow-x: auto; flex-wrap: nowrap; }
+}

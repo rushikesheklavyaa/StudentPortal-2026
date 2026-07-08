@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eklavyaa Academy | Teacher Login</title>
+<meta name="description" content="Coaching Attendance Portal for Eklavyaa Academy" />
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0A2463">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Eklavyaa Academy">
+<link rel="icon" href="assets/img/favicon.ico">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- Toastify -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+<!-- App CSS -->
+<link rel="stylesheet" href="assets/css/style.css?v=2">
+<link rel="stylesheet" href="assets/css/components.css?v=2">
+</head>
+<body>
+
+<div class="login-page">
+  <div class="login-shell">
+
+    <!-- Brand panel -->
+    <div class="login-brand">
+      <div class="logo-badge">EA</div>
+      <h1>Eklavyaa Academy<br>Attendance Portal</h1>
+      <p>One dashboard to manage students, attendance, tests and performance — built for teachers who'd rather teach than fill registers.</p>
+
+      <ul class="brand-feature-list">
+        <li><i class="fa-solid fa-user-check"></i> Mark attendance in seconds</li>
+        <li><i class="fa-solid fa-chart-line"></i> Track test performance</li>
+        <li><i class="fa-solid fa-users"></i> Manage students with ease</li>
+        <li><i class="fa-solid fa-shield-halved"></i> Secure PIN-based login</li>
+      </ul>
+    </div>
+
+    <!-- Form panel -->
+    <div class="login-form-panel">
+      <span class="form-tag"><i class="fa-solid fa-chalkboard-user"></i> Teacher Access</span>
+      <h2>Welcome back</h2>
+      <p class="subtitle">Sign in with your teacher name and PIN to continue.</p>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label for="teacherName">Teacher Name</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" id="teacherName" name="teacherName" placeholder="Enter your name" autocomplete="username" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="teacherPin">PIN</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="teacherPin" name="teacherPin" placeholder="Enter your PIN" autocomplete="current-password" inputmode="numeric" required />
+            <button type="button" class="toggle-visibility" id="togglePin" aria-label="Show PIN">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="loginBtn">
+          <span id="loginBtnText">Sign In</span>
+        </button>
+      </form>
+
+      <div class="login-divider">OR</div>
+
+      <a href="student.html" class="student-portal-link">
+        <i class="fa-solid fa-graduation-cap"></i> View Student Portal
+      </a>
+
+      <p class="login-footer-note">&copy; <span id="currentYear"></span> Eklavyaa Academy. All rights reserved.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<!-- App Script (ES6 module) -->
+<script type="module" src="assets/js/login.js?v=2"></script>
+
+<script>
+  document.getElementById('currentYear').textContent = new Date().getFullYear();
+</script>
+<script src="assets/js/pwa-init.js?v=1"></script>
+
+</body>
+</html>

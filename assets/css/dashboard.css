@@ -1,0 +1,348 @@
+/* ==================================================================
+   dashboard.css
+   Layout for the Teacher Dashboard (sidebar + topbar + content areas)
+   ================================================================== */
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* ---------------- Sidebar ---------------- */
+
+.sidebar {
+  background: linear-gradient(180deg, #0f2557 0%, var(--primary) 100%);
+  color: #fff;
+  padding: 26px 18px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 50;
+  width: 260px;
+  min-width: 260px;
+  max-width: 260px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 26px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 20px;
+}
+
+.sidebar-brand .logo-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), #fbbf24);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 18px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.sidebar-brand .logo-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.sidebar-brand .brand-text { min-width: 0; overflow: hidden; }
+.sidebar-brand .brand-text .name { font-weight: 700; font-size: 14.5px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar-brand .brand-text .tag { font-size: 10.5px; color: rgba(255,255,255,0.6); letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.nav-section-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 14px 12px 8px;
+  font-weight: 600;
+}
+
+.nav-list { display: flex; flex-direction: column; gap: 3px; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: var(--transition);
+  position: relative;
+}
+
+.nav-item i { width: 18px; text-align: center; font-size: 15px; }
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: -18px;
+  top: 8px;
+  bottom: 8px;
+  width: 4px;
+  background: var(--accent);
+  border-radius: 0 4px 4px 0;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(239, 68, 68, 0.12);
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.logout-btn:hover { background: rgba(239, 68, 68, 0.25); color: #fff; }
+
+/* ---------------- Main / Topbar ---------------- */
+
+.main-content { display: flex; flex-direction: column; min-height: 100vh; min-width: 0; }
+
+.topbar {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  gap: 16px;
+}
+
+.topbar-title h1 { font-size: 19px; font-weight: 700; }
+.topbar-title p { font-size: 12.5px; color: var(--text-muted); margin-top: 2px; }
+
+.topbar-right { display: flex; align-items: center; gap: 16px; }
+
+.menu-toggle {
+  display: none;
+  background: #F1F5F9;
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dark);
+}
+
+.teacher-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px 6px 6px;
+  border-radius: 30px;
+  background: #F1F5F9;
+}
+
+.teacher-chip .avatar-chip { margin-right: 0; }
+.teacher-chip .t-name { font-size: 13px; font-weight: 600; }
+.teacher-chip .t-role { font-size: 10.5px; color: var(--text-muted); }
+
+.page-content {
+  padding: 28px 32px 60px;
+  flex: 1;
+  min-width: 0;
+}
+
+.view-section { display: none; animation: fadeSlideUp 0.4s ease both; }
+.view-section.active { display: block; }
+
+/* ---------------- Dashboard-specific ---------------- */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+}
+
+.dashboard-grid > * { min-width: 0; }
+
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.quick-action-btn {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.quick-action-btn:hover {
+  border-color: var(--secondary);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
+}
+
+.quick-action-btn i {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+}
+
+.quick-action-btn span { font-size: 12.5px; font-weight: 600; color: var(--text-dark); }
+
+.activity-list { display: flex; flex-direction: column; gap: 4px; }
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.activity-item:last-child { border-bottom: none; }
+
+.activity-icon {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.activity-icon.att { background: linear-gradient(135deg, var(--secondary), var(--primary)); }
+.activity-icon.test { background: linear-gradient(135deg, var(--accent), #d97706); }
+
+.activity-text { font-size: 13px; color: var(--text-dark); line-height: 1.4; }
+.activity-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+.chart-card canvas { max-height: 260px; width: 100% !important; }
+
+/* ---------------- Admin-only / role helpers ---------------- */
+
+.admin-only { /* teacher-role JS removes these nodes; keep a safe default */ }
+
+/* ---------------- Modal section divider (Fees block in student modal) ---------------- */
+
+.modal-section-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 12px;
+  color: var(--text-muted);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.modal-section-divider::before,
+.modal-section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ---------------- Notices / Appreciation list ---------------- */
+
+#noticesListArea .activity-item { align-items: flex-start; }
+#noticesListArea textarea { resize: vertical; }
+
+/* ---------------- Attendance marking grid ---------------- */
+
+.attendance-summary-bar {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.summary-chip {
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  background: #F1F5F9;
+  color: var(--text-dark);
+}
+
+.summary-chip b { margin-left: 4px; }
+
+/* ---------------- Responsive ---------------- */
+
+@media (max-width: 1180px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .quick-actions-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 992px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0;
+    width: 260px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: flex; }
+  .sidebar-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(15,23,42,0.5);
+    z-index: 45;
+  }
+  .sidebar-overlay.active { display: block; }
+}
+
+@media (max-width: 640px) {
+  .topbar { padding: 14px 18px; }
+  .page-content { padding: 20px 16px 50px; }
+  .teacher-chip .t-role { display: none; }
+  .quick-actions-grid { grid-template-columns: 1fr 1fr; }
+}

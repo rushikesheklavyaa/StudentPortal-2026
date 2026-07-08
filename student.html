@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Student Portal | Eklavyaa Academy</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0A2463">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Eklavyaa Academy">
+<link rel="icon" href="assets/img/favicon.ico">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+<link rel="stylesheet" href="assets/css/style.css?v=2">
+<link rel="stylesheet" href="assets/css/components.css?v=2">
+<link rel="stylesheet" href="assets/css/student.css?v=2">
+</head>
+<body class="student-page">
+
+<header class="student-topbar">
+  <div class="brand">
+    <div class="logo-badge">EA</div>
+    <div>
+      <div class="name">Eklavyaa Academy</div>
+      <div class="tag">Student Portal</div>
+    </div>
+  </div>
+  <a href="index.html" class="teacher-login-link"><i class="fa-solid fa-chalkboard-user"></i> Teacher Login</a>
+</header>
+
+<!-- Search view -->
+<div class="student-search-hero" id="searchHero">
+  <h2>Check your attendance &amp; marks</h2>
+  <p>Enter your Student ID to view your profile, attendance percentage and test performance.</p>
+
+  <form id="studentSearchForm">
+    <div class="student-search-box">
+      <input type="text" id="studentIdInput" placeholder="Enter Student ID (e.g. STD000001)" autocomplete="off" required>
+      <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> View</button>
+    </div>
+  </form>
+  <p class="student-hint">Don't know your Student ID? Ask your teacher.</p>
+</div>
+
+<!-- Dashboard view -->
+<div class="student-dashboard-wrap" id="studentDashboard">
+
+  <button class="profile-back-btn" id="backToSearchBtn" style="margin-bottom:16px;">
+    <i class="fa-solid fa-arrow-left"></i> Search another student
+  </button>
+
+  <div class="profile-header-card">
+    <div class="profile-header-left">
+      <div class="profile-avatar" id="profileAvatar">--</div>
+      <div>
+        <h2 id="profileName">Student Name</h2>
+        <div class="meta">
+          <span><i class="fa-solid fa-id-card"></i> <span id="profileId">-</span></span>
+          <span><i class="fa-solid fa-layer-group"></i> <span id="profileStandard">-</span></span>
+          <span><i class="fa-solid fa-graduation-cap"></i> <span id="profileBoard">-</span></span>
+          <span><i class="fa-solid fa-users"></i> <span id="profileBatch">-</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="student-stats-grid">
+    <div class="card card-pad" style="display:flex; align-items:center; justify-content:center;">
+      <div class="attendance-ring-wrap">
+        <canvas id="attendanceRing" width="130" height="130"></canvas>
+        <div class="progress-ring-label">
+          <div class="pct" id="attendancePercentLabel">0%</div>
+          <div class="lbl">Attendance</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon icon-blue"><i class="fa-solid fa-calendar-check"></i></div>
+      <div class="stat-info">
+        <div class="stat-value" id="totalDaysValue">0</div>
+        <div class="stat-label">Total Days Recorded</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon icon-green"><i class="fa-solid fa-square-poll-vertical"></i></div>
+      <div class="stat-info">
+        <div class="stat-value" id="averageMarksValue">0%</div>
+        <div class="stat-label">Average Marks</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon icon-amber"><i class="fa-solid fa-trophy"></i></div>
+      <div class="stat-info">
+        <div class="stat-value" id="highestMarksValue">0%</div>
+        <div class="stat-label">Highest Score</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STUDENT PORTAL TABS ============ -->
+  <div class="student-tabs" id="studentTabs">
+    <button class="student-tab-btn active" data-tab="tab-attendance"><i class="fa-solid fa-calendar-check"></i> Attendance</button>
+    <button class="student-tab-btn" data-tab="tab-marks"><i class="fa-solid fa-square-poll-vertical"></i> Marks</button>
+    <button class="student-tab-btn" data-tab="tab-practice"><i class="fa-solid fa-file-pdf"></i> Practice</button>
+    <button class="student-tab-btn" data-tab="tab-reports"><i class="fa-solid fa-chart-column"></i> Reports</button>
+    <button class="student-tab-btn" data-tab="tab-fees"><i class="fa-solid fa-indian-rupee-sign"></i> Fees</button>
+    <button class="student-tab-btn" data-tab="tab-notices"><i class="fa-solid fa-bullhorn"></i> Notices <span class="tab-dot" id="noticesDot" style="display:none;"></span></button>
+  </div>
+
+  <section class="student-tab-panel active" id="tab-attendance">
+    <div class="card card-pad">
+      <div class="card-header">
+        <h3>Attendance History</h3>
+      </div>
+      <div id="attendanceHistoryList">
+        <div class="empty-state"><i class="fa-solid fa-calendar-xmark"></i><p>No attendance records yet.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="student-tab-panel" id="tab-marks">
+    <div class="card card-pad">
+      <div class="card-header">
+        <h3>Recent Tests</h3>
+      </div>
+      <div id="recentTestsList">
+        <div class="empty-state"><i class="fa-solid fa-file-circle-xmark"></i><p>No test results yet.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="student-tab-panel" id="tab-reports">
+    <div class="card card-pad">
+      <div class="card-header">
+        <div>
+          <h3>Generate a Report</h3>
+          <p class="subtitle">Download or view your attendance/marks for a specific period</p>
+        </div>
+      </div>
+      <div class="filter-bar">
+        <div class="field">
+          <label>Report Type</label>
+          <select id="studentReportType">
+            <option value="attendance">Attendance Summary</option>
+            <option value="marks">Marks Summary</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Month</label>
+          <input type="month" id="studentReportMonth">
+        </div>
+        <button class="btn btn-solid-primary" id="generateStudentReportBtn"><i class="fa-solid fa-magnifying-glass-chart"></i> Generate</button>
+      </div>
+      <div id="studentReportResultArea">
+        <div class="empty-state"><i class="fa-solid fa-chart-column"></i><p>Choose a report type and generate to view results.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="student-tab-panel" id="tab-fees">
+    <div class="card card-pad">
+      <div class="card-header">
+        <h3>Fees</h3>
+      </div>
+      <div id="studentFeesArea">
+        <div class="empty-state"><i class="fa-solid fa-indian-rupee-sign"></i><p>No fee record available yet.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="student-tab-panel" id="tab-notices">
+    <div class="card card-pad">
+      <div class="card-header">
+        <h3>Notices &amp; Appreciation</h3>
+      </div>
+      <div id="studentNoticesArea">
+        <div class="empty-state"><i class="fa-solid fa-bullhorn"></i><p>Nothing here yet.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="student-tab-panel" id="tab-practice">
+    <div class="card card-pad">
+      <div class="card-header">
+        <div>
+          <h3>Test Papers &amp; Practice</h3>
+          <p class="subtitle">Download question papers and model answers, and upload your own answer sheet for review</p>
+        </div>
+      </div>
+      <div id="practiceTestsList">
+        <div class="empty-state"><i class="fa-solid fa-file-pdf"></i><p>No tests available for your class yet.</p></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<!-- App Script -->
+<script type="module" src="assets/js/student.js?v=2"></script>
+<script src="assets/js/pwa-init.js?v=1"></script>
+
+</body>
+</html>
